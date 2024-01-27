@@ -54,8 +54,10 @@ $config = [
             'showScriptName' => false,
             'baseUrl'=>'/',
             'rules' => [
+                '<controller>/<action>/<view:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller>/<action>/<id:\d+>/<page:\d>'=>'<controller>/<action>',
-                '<controller>/<action>/<id:\d+>'=>'<controller>/<action>'
+                '<controller>/<action>/<id:\d+>'=>'<controller>/<action>',
+                '<action>/<controller>'=>'<action>/<controller>'
             ],
         ],
 

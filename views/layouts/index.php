@@ -8,8 +8,8 @@
 use app\assets\AppAsset;
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\bootstrap5\Modal;
 use app\components\MenuWidgets;
+use yii\bootstrap5\Modal;
 $menu= new MenuWidgets();
 AppAsset::register($this);
 
@@ -150,40 +150,32 @@ AppAsset::register($this);
                             </li>
                             <!-- Search Box End -->
                               <?php if(!Yii::$app->user->isGuest):?>
-                                  <li><a href="<?=Url::to(['cart/wash-list'])?>"><i class="pe-7s-like"></i><span><?php
+                                  <li><a href="<?=Url::to(['cart/wash-list'])?>"><i class="pe-7s-like"></i><span id="wash-lists"><?php
                                               echo Yii::$app->controller->sonn;
                                                ?>
                                           </span></a></li>
-                                  <li><i class="pe-7s-shopbag"></i><span>2</span>
+                                  <li><i class="pe-7s-shopbag"></i><span id="counter"><?php  echo Yii::$app->controller->sonn; ?></span>
                                       <ul class="ht-dropdown main-cart-box">
-                                          <li>
+                                          <li style="height: 400px;overflow: auto">
+                                              <?php foreach (Yii::$app->controller->model as $r): ?>
                                               <!-- Cart Box Start -->
                                               <div class="single-cart-box">
                                                   <div class="cart-img">
                                                       <a href="#"><img src="/img/menu/1.jpg" alt="cart-image"></a>
                                                   </div>
                                                   <div class="cart-content">
-                                                      <h6><a href="#">Alpha Block Black Polo T-Shirt</a></h6>
-                                                      <span>1 × $399.00</span>
+                                                      <h6><a href="#"><?=$r['name']?></a></h6>
+                                                      <span><?=$r['son']?> × $<?=$r['sum']?></span>
                                                   </div>
                                                   <i class="pe-7s-close"></i>
                                               </div>
                                               <!-- Cart Box End -->
-                                              <!-- Cart Box Start -->
-                                              <div class="single-cart-box">
-                                                  <div class="cart-img">
-                                                      <a href="#"><img src="/img/menu/2.jpg" alt="cart-image"></a>
-                                                  </div>
-                                                  <div class="cart-content">
-                                                      <h6><a href="#">Red Printed Round Neck T-Shirt</a></h6>
-                                                      <span>2 × $299.00</span>
-                                                  </div>
-                                                  <i class="pe-7s-close"></i>
-                                              </div>
-                                              <!-- Cart Box End -->
+                                              <?php endforeach;?>
                                               <!-- Cart Footer Inner Start -->
                                               <div class="cart-footer fix">
-                                                  <h5>total :<span class="f-right">$698.00</span></h5>
+                                                  <h5>total :<span class="f-right">$<?php
+                                                          echo Yii::$app->controller->sum;
+                                                  ?></span></h5>
                                                   <div class="cart-actions">
                                                       <a class="checkout" href="checkout.html">Checkout</a>
                                                   </div>
@@ -519,7 +511,7 @@ AppAsset::register($this);
                                     </div>
                                     <!-- Main Thumbnail Image End -->
                                     <!-- Thumbnail Description Start -->
-                                            <div class="col-md-7 col-sm-6 modal-one">
+                                    <div class="col-md-7 col-sm-6 modal-one">
                                         <div class="thubnail-desc fix">
                                             <h2 class="product-header">Sheepskin Pillow2</h2>
                                             <!-- Product Rating Start -->
@@ -594,12 +586,15 @@ AppAsset::register($this);
 <!-- jquery 3.12.4 -->
 <?php
 Modal::begin([
-        'size'=>'modal-lg',
-        'options'=>['id'=>'modal_one']
+        'title'=>'salom',
+        'id'=>'modal_one',
+        'size'=>'modal-lg'
+
 ]);
 ?>
   <div id="loading"></div>
 <?php
+echo "<div id='modalContent'>Content</div>";
 Modal::end();
 ?>
 <?php $this->endBody() ?>

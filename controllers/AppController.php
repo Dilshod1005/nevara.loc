@@ -8,14 +8,24 @@ use  Yii;
 class AppController extends  Controller
 {
     public $sonn;
-
+    public $sum;
+    public $model=[];
     public  function __construct($id,$module,$config=[])
     {
         parent::__construct($id,$module,$config);
         if(!Yii::$app->user->isGuest){
             $order=Orders::find()->where(['users_id'=>Yii::$app->user->identity->id])->all();
-            foreach ($order as $r){
-                $this->sonn+=$r['son'];
+            if(!empty($order)){
+                foreach ($order as $r){
+                    $this->sonn+=$r['son'];
+                    $this->sum=$this->sonn*$r['sum'];
+                }
+                $this->model=$order;
+
+            }
+            else{
+                $this->sonn=0;
+                $this->sum=0;
             }
         }
     }

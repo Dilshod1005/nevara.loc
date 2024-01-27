@@ -34,7 +34,7 @@ class AppAsset extends AssetBundle
 //        'css/site.css',
     ];
     public $js = [
-
+        "js/ajax.js",
        "js/vendor/jquery-1.12.4.min.js",
         "js/jquery.meanmenu.min.js",
         "js/jquery.scrollUp.js",
@@ -46,7 +46,7 @@ class AppAsset extends AssetBundle
         "js/bootstrap.min.js",
         "js/plugins.js",
         "js/main.js",
-        "js/ajax.js",
+
         "js/yii.activeForm.js",
     ];
     public $depends = [

@@ -30,7 +30,7 @@ public  function actionCategory(){
     ->where(['category_id'=>$model->id]);
     $page=new Pagination([
        'totalCount'=>$product->count(),
-        'pageSize'=>1,
+        'pageSize'=>8,
         'forcePageParam'=>false,
         'pageSizeParam'=>false
     ]);

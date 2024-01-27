@@ -3,6 +3,8 @@ use yii\helpers\Url;
 /**
  * @var app\models\Products $model
  */
+$son=0;
+$sum=0;
 ?>
 <!-- Page Breadcrumb Start -->
 <div class="main-breadcrumb mb-100">
@@ -10,9 +12,9 @@ use yii\helpers\Url;
         <div class="row">
             <div class="col-sm-12">
                 <div class="breadcrumb-content text-center ptb-70">
-                    <ul class="breadcrumb-list breadcrumb">
+                    <ul class="breadcrumb-list breadcrumb"  style="justify-content: center">
                         <li><a href="<?=Url::to(['main/index'])?>">Bosh sahifa</a></li>
-                        <li><a href="<?=Url::to(['cart/cart'])?>">cart</a></li>
+                        <li><a href="<?=Url::to(['cart/wash-list'])?>">Wash-List</a></li>
                     </ul>
                 </div>
             </div>
@@ -25,9 +27,17 @@ use yii\helpers\Url;
 <!-- cart-main-area & wish list start -->
 <div class="cart-main-area pb-100">
     <div class="container">
+        <?php if (empty($model)):?>
+        <h3 class="alert alert-danger">Xarid savatcha bo'sh</h3>
         <!-- Section Title Start -->
+        <?php else:?>
         <div class="section-title mb-50">
             <h2>Xarid Savatcha</h2>
+            <?php if (Yii::$app->session->hasFlash('success')):?>
+            <p class="alert alert-danger">
+            <?=Yii::$app->session->getFlash('success');?>
+            </p>
+            <?php endif;?>
         </div>
         <!-- Section Title Start End -->
         <div class="row">
@@ -48,18 +58,22 @@ use yii\helpers\Url;
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach($_SESSION['cart'] as $r): ?>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="/img/new-products/2_2.jpg" alt="cart-image" /></a>
-                                    </td>
-                                    <td class="product-name"><a href="#"><?=$r['name']?></a></td>
-                                    <td class="product-price"><span class="amount">£<?=$r['sum']?></span></td>
-                                    <td class="product-quantity"><input type="number" value="<?=$r['son']?>" /></td>
-                                    <td class="product-subtotal">£<?=$r['son']*$r['sum']?></td>
-                                    <td class="product-remove"> <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                                </tr>
-                            <?php endforeach;?>
+                             <?php foreach($model as $r): ?>
+                                 <tr>
+                                     <?php
+                                     $son+=$r['son'];
+                                     $sum+=$r['son']*$r['sum'];
+                                     ?>
+                                     <td class="product-thumbnail">
+                                         <a href="#"><img src="/img/new-products/2_2.jpg" alt="cart-image" /></a>
+                                     </td>
+                                     <td class="product-name"><a href="#"><?=$r['name']?></a></td>
+                                     <td class="product-price"><span class="amount">£<?=$r['sum']?></span></td>
+                                     <td class="product-quantity"><input type="number" value="<?=$r['son']?>" /></td>
+                                     <td class="product-subtotal">£<?=$r['son']*$r['sum']?></td>
+                                     <td class="product-remove"> <a href="<?=Url::to(['cart/del-items','id'=>$r['id']])?>"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                 </tr>
+                             <?php endforeach;?>
                             </tbody>
                         </table>
                     </div>
@@ -82,12 +96,12 @@ use yii\helpers\Url;
                                     <tbody>
                                     <tr class="cart-subtotal">
                                         <th>Umumiy Soni</th>
-                                        <td><span class="amount"><?=Yii::$app->controller->sonn;?></span></td>
+                                        <td><span class="amount" id="total-count"><?=Yii::$app->controller->sonn;?></span></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>Umumiy Summa</th>
                                         <td>
-                                            <strong><span class="amount">$<?=$_SESSION['cart.sum']?></span></strong>
+                                            <strong><span class="amount">$<?= $sum ?></span></strong>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -106,5 +120,6 @@ use yii\helpers\Url;
         </div>
         <!-- Row End -->
     </div>
+    <?php endif;?>
 </div>
 <!-- cart-main-area & wish list end -->

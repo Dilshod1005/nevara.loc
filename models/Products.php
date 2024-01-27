@@ -138,7 +138,9 @@ class Products extends \yii\db\ActiveRecord
 
     public  function saveDb($model,$son=1)
     {
-        $orders=Orders::findOne(['products_id'=>$model->id]);
+        $orders=Orders::findOne(['products_id'=>$model->id,
+            'users_id'=>Yii::$app->user->identity->id
+            ]);
         if (!empty($orders)){
             $orders->son+=$son;
             $orders->save(false);
@@ -154,5 +156,15 @@ class Products extends \yii\db\ActiveRecord
             $orders->status='0';
             $orders->save(false);
         }
+    }
+
+    public function DelItems($id)
+    {
+        if(!isset($_SESSION['cart'][$id])) return false;
+        $son_minus=$_SESSION['cart'][$id]['son'];
+        $sum_minus=$_SESSION['cart'][$id]['sum']*$_SESSION['cart'][$id]['son'];
+        $_SESSION['cart.son']-=$son_minus;
+        $_SESSION['cart.sum']-=$sum_minus;
+        unset($_SESSION['cart'][$id]);
     }
 }

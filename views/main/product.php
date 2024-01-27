@@ -4,6 +4,7 @@
  * @var app\models\Products $model
  * @var yii\data\Pagination $page
  */
+use yii\helpers\Url;
 ?>
 <!-- Page Breadcrumb Start -->
 <div class="main-breadcrumb mb-100">
@@ -94,15 +95,19 @@
                         <div class="quantity-item">
                             <label>Qty: </label>
                             <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="0">
+                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
                             </div>
                         </div>
                     </div>
                     <!-- Product Box Quantity End -->
                     <!-- Product Button Actions Start -->
                     <div class="product-button-actions">
-                        <button class="add-to-cart">add to cart</button>
-                        <a href="wish-list.html" data-toggle="tooltip" title="Add to Wishlist" class="same-btn mr-15"><i class="pe-7s-like"></i></a>
+                      <?php if (!Yii::$app->user->isGuest): ?>
+                        <button class="add-to-cart" id="add-to-cart" href="<?=Url::to(['cart/add-cart'])?>" data-id="<?=$model->id ?>">add to cart</button>
+                        <?php else: ?>
+                          <button class="add-to-cart">Xarit savatchaga qo'shish uchun tizimga kirish zarur</button>
+                        <?php endif;?>
+                        <a href="<?=\yii\helpers\Url::to(['cart/wash-list'])?>" data-toggle="tooltip" title="Add to Wishlist" class="same-btn mr-15"><i class="pe-7s-like"></i></a>
                         <button data-toggle="tooltip" title="Compare this Product" class="same-btn"><i class="pe-7s-repeat"></i></button>
                     </div>
                     <!-- Product Button Actions End -->
