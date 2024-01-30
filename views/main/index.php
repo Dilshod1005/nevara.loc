@@ -71,7 +71,7 @@ use yii\helpers\Url;
                                     <img class="secondary-img" src="/img/new-products/2_2.jpg" alt="single-product">
                                 </a>
                                 <div class="quick-view">
-                                    <a href="#" data-id="<?=$r['id']?>"  class="modal-one"><i class="pe-7s-look  "></i>Batafsil ko'rish</a>
+                                    <a href="#" data-id="<?=$r['id']?>" data-toggle="modal" data-target="#myModal" class="modal-one"><i class="pe-7s-look  "></i>Batafsil ko'rish</a>
                                 </div>
                                 <span class="sticker-new">new</span>
                             </div>
