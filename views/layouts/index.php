@@ -587,7 +587,7 @@ AppAsset::register($this);
 <?php
 Modal::begin([
         'title'=>'salom',
-        'id'=>'modal_one',
+        'id'=>'myModal',
         'size'=>'modal-lg'
 
 ]);
