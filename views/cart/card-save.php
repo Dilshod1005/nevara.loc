@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 /**
  * @var app\models\Products $model
+ * @var app\models\Orders $order
  */
 $son=0;
 $sum=0;
@@ -27,17 +28,9 @@ $sum=0;
 <!-- cart-main-area & wish list start -->
 <div class="cart-main-area pb-100">
     <div class="container">
-        <?php if (empty($model)):?>
-        <h3 class="alert alert-danger">Xarid savatcha bo'sh</h3>
-        <!-- Section Title Start -->
-        <?php else:?>
         <div class="section-title mb-50">
-            <h2>Xarid Savatcha</h2>
-            <?php if (Yii::$app->session->hasFlash('success')):?>
-            <p class="alert alert-danger">
-            <?=Yii::$app->session->getFlash('success');?>
-            </p>
-            <?php endif;?>
+            <h2>Buyrutma berish</h2>
+
         </div>
         <!-- Section Title Start End -->
         <div class="row">
@@ -54,30 +47,19 @@ $sum=0;
                                 <th class="product-price">Narxi</th>
                                 <th class="product-quantity">Soni</th>
                                 <th class="product-subtotal">Umumiy xarid summasi</th>
-                                <th class="product-remove">O'chirish</th>
-                                <th class="product-create">Buyrutma berish</th>
+
                             </tr>
                             </thead>
                             <tbody>
-                             <?php foreach($model as $r): ?>
-                                 <tr>
-                                     <?php
-                                     $son+=$r['son'];
-                                     $sum+=$r['son']*$r['sum'];
-                                     ?>
-                                     <td class="product-thumbnail">
-                                         <a href="#"><img src="/img/new-products/2_2.jpg" alt="cart-image" /></a>
-                                     </td>
-                                     <td class="product-name"><a href="#"><?=$r['name']?></a></td>
-                                     <td class="product-price"><span class="amount">£<?=$r['sum']?></span></td>
-                                     <td class="product-quantity"><input type="number"  readonly value="<?=$r['son']?>" /></td>
-                                     <td class="product-subtotal">£<?=$r['son']*$r['sum']?></td>
-                                     <td class="product-remove"> <a href="<?=Url::to(['cart/del-items','id'=>$r['id']])?>"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                                     <td class="product-create">
-                                         <a href="<?=Url::to(['cart/add-save','id'=>$r['id']])?>" class="btn btn-info btn-sm"><i class="fa fa-cart-plus"></i></a>
-                                     </td>
-                                 </tr>
-                             <?php endforeach;?>
+                                    <td class="product-thumbnail">
+                                        <a href="#"><img src="/img/new-products/2_2.jpg" alt="cart-image" /></a>
+                                    </td>
+                                    <td class="product-name"><a href="#"><?=$order->name?></a></td>
+                                    <td class="product-price"><span class="amount">£<?=$order->sum?></span></td>
+                                    <td class="product-quantity"><input type="number" id="products_counts" value="<?=$order->son?>"/></td>
+                                    <td class="product-subtotal">£<?=$order->son*$order->sum?></td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -124,6 +106,5 @@ $sum=0;
         </div>
         <!-- Row End -->
     </div>
-    <?php endif;?>
 </div>
 <!-- cart-main-area & wish list end -->

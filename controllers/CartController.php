@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Orders;
+use app\models\OrdersItems;
 use app\models\Products;
 use yii\filters\AccessControl;
 use Yii;
@@ -97,5 +98,13 @@ class CartController extends AppController
         else{
             return false;
         }
+    }
+
+    public function actionAddSave(){
+        $id=Yii::$app->request->get('id');
+        $order=Orders::findOne(['id'=>$id]);
+        $product=new Products();
+        $model=new OrdersItems();
+        return $this->render('card-save',compact('order','model'));
     }
 }

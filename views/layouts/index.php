@@ -586,15 +586,13 @@ AppAsset::register($this);
 <!-- jquery 3.12.4 -->
 <?php
 Modal::begin([
-        'title'=>'salom',
-        'id'=>'myModal',
+        'id'=>'modal_one',
         'size'=>'modal-lg'
 
 ]);
 ?>
   <div id="loading"></div>
 <?php
-echo "<div id='modalContent'>Content</div>";
 Modal::end();
 ?>
 <?php $this->endBody() ?>
