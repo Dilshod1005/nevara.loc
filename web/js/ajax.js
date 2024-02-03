@@ -3,13 +3,17 @@ $(function(){
     $('#products_counts').click(function (){
         if($(this).val()<=0){
             $(this).val(1);
+
         }
+        $('#ordersitems-son').val($(this).val());
     });
 
     $('#products_counts').blur(function (){
         if($(this).val()<=0){
             $(this).val(1);
+
         }
+        $('#ordersitems-son').val($(this).val());
     });
 
 

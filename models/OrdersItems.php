@@ -13,12 +13,13 @@ use Yii;
  * @property string $fullname
  * @property string $email
  * @property string $phone
- * @property string $adress
+ * @property string $address
  * @property string $products_name
  * @property float $sum
  * @property int $son
  * @property string $images
  * @property string $status
+ * @property string $date
  */
 class OrdersItems extends \yii\db\ActiveRecord
 {
@@ -36,11 +37,12 @@ class OrdersItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['users_id', 'products_id', 'fullname', 'email', 'phone', 'adress', 'products_name', 'sum', 'son', 'images', 'status'], 'required'],
+            [['users_id', 'products_id', 'fullname', 'email', 'phone', 'address', 'products_name', 'sum', 'son', 'images', 'status', 'date'], 'required'],
             [['users_id', 'products_id', 'son'], 'integer'],
             [['sum'], 'number'],
             [['status'], 'string'],
-            [['fullname', 'adress', 'products_name'], 'string', 'max' => 100],
+            [['date'], 'safe'],
+            [['fullname', 'address', 'products_name'], 'string', 'max' => 100],
             [['email', 'images'], 'string', 'max' => 50],
             [['phone'], 'string', 'max' => 20],
         ];
@@ -55,15 +57,16 @@ class OrdersItems extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'users_id' => Yii::t('app', 'Users ID'),
             'products_id' => Yii::t('app', 'Products ID'),
-            'fullname' => Yii::t('app', 'Fullname'),
+            'fullname' => Yii::t('app', 'FISH'),
             'email' => Yii::t('app', 'Email'),
             'phone' => Yii::t('app', 'Phone'),
-            'adress' => Yii::t('app', 'Adress'),
-            'products_name' => Yii::t('app', 'Products Name'),
+            'address' => Yii::t('app', 'Address'),
+            'products_name' => Yii::t('app', 'Maxsulot nomi'),
             'sum' => Yii::t('app', 'Sum'),
             'son' => Yii::t('app', 'Son'),
             'images' => Yii::t('app', 'Images'),
             'status' => Yii::t('app', 'Status'),
+            'date' => Yii::t('app', 'Vaqti'),
         ];
     }
 }

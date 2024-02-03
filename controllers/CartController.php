@@ -102,9 +102,38 @@ class CartController extends AppController
 
     public function actionAddSave(){
         $id=Yii::$app->request->get('id');
-        $order=Orders::findOne(['id'=>$id]);
+        $order=Orders::findOne([$id]);
         $product=new Products();
         $model=new OrdersItems();
+        if($model->load(Yii::$app->request->post())){
+            $model->users_id=Yii::$app->user->identity->id;
+            $model->products_id=$order->products_id;
+            $model->status='active';
+            $model->date=date('Y-m-d');
+            if ($model->save()){
+                $product->DelItems($order->products_id);
+                $order->delete();
+                Yii::$app->session->setFlash('success',"Buyrutmangiz yuborildi");
+                return $this->redirect(['cart/oformit']);
+            }
+            else{
+                Yii::$app->session->setFlash('error',"Buyrutmangiz yuborilmadi");
+                return $this->refresh();
+            }
+
+        }
         return $this->render('card-save',compact('order','model'));
+    }
+
+
+    public function actionOformit(){
+        $order_item=OrdersItems::findOne()
+            ->asArray()
+            ->where([
+                'users_id'=>Yii::$app->user->identity->id
+            ])
+            ->orderBy(['id'=>SORT_DESC])
+            ->all();
+        debug($order_item);
     }
 }

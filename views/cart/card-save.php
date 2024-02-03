@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 /**
  * @var app\models\Products $model
  * @var app\models\Orders $order
@@ -30,7 +32,9 @@ $sum=0;
     <div class="container">
         <div class="section-title mb-50">
             <h2>Buyrutma berish</h2>
-
+            <?php if (Yii::$app->session->hasFlash('error')):?>
+            <p class="alert alert-danger"><?=Yii::$app->session->getFlash('error');?></p>
+            <?php endif;?>
         </div>
         <!-- Section Title Start End -->
         <div class="row">
@@ -63,44 +67,21 @@ $sum=0;
                             </tbody>
                         </table>
                     </div>
-                    <!-- Table Content Start -->
-                    <div class="row">
-                        <!-- Cart Button Start -->
-                        <div class="col-md-8 col-sm-7 col-xs-12">
-                            <div class="buttons-cart">
-                                <input type="submit" value="Update Cart" />
-                                <a href="#">Continue Shopping</a>
-                            </div>
-                        </div>
-                        <!-- Cart Button Start -->
-                        <!-- Cart Totals Start -->
-                        <div class="col-md-4 col-sm-5 col-xs-12">
-                            <div class="cart_totals">
-                                <h2>Cart Totals</h2>
-                                <br />
-                                <table>
-                                    <tbody>
-                                    <tr class="cart-subtotal">
-                                        <th>Umumiy Soni</th>
-                                        <td><span class="amount" id="total-count"><?=Yii::$app->controller->sonn;?></span></td>
-                                    </tr>
-                                    <tr class="order-total">
-                                        <th>Umumiy Summa</th>
-                                        <td>
-                                            <strong><span class="amount">$<?= $sum ?></span></strong>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="wc-proceed-to-checkout">
-                                    <a href="#">Proceed to Checkout</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Cart Totals End -->
-                    </div>
                     <!-- Row End -->
                 </form>
+                <?php
+                $f=ActiveForm::begin();
+                echo $f->field($model,'fullname')->textInput(['value'=>Yii::$app->user->identity->fullname]);
+                echo $f->field($model,'email')->textInput(['value'=>Yii::$app->user->identity->email]);
+                echo $f->field($model,'phone')->textInput(['value'=>Yii::$app->user->identity->phone]);
+                echo $f->field($model,'address')->textInput(['value'=>Yii::$app->user->identity->address]);
+                echo $f->field($model,'son')->input('number',['value'=>$order->son,'class'=>'numbers form-control','readonly'=>true]);
+                echo $f->field($model,'products_name')->textInput(['value'=>$order->name,'readonly'=>true]);
+                echo $f->field($model,'sum')->textInput(['value'=>$order->sum,'readonly'=>true]);
+                echo $f->field($model,'images')->textInput(['value'=>$order->images,'readonly'=>true]);
+                echo \yii\helpers\Html::submitButton('Buyrutma berish',['class'=>'btn btn-info btn-sm']);
+                ActiveForm::end();
+                ?>
                 <!-- Form End -->
             </div>
         </div>
